@@ -37,7 +37,6 @@ def onMouseSub(event, x, y, flags, param):
 result_names = ['SRCNN', 'EDSR', 'RCAN', 'RRDB', 'Ours', 'HR']
 result_paths = ['Set5_SRCNN', 'Set5_EDSR', 'Set5_RCAN', 'Set5_RRDN', 'Set5_Ours', 'Set5_HR']
 
-image_names = os.listdir(result_paths[0])
 main_index = -1
 n_cols = 4
 n_rows = math.ceil(len(result_names) / n_cols)
@@ -49,7 +48,7 @@ pad_size, pad_color = 2, (0, 0, 0)
 sub_size = int(win_h / (n_rows * sub_num))
 show_name = True
 
-
+image_names = os.listdir(result_paths[0])
 result_index = 0
 crop_sub_flag = False
 box_flag = False
@@ -94,9 +93,15 @@ while True:
         cv2.destroyAllWindows()
         exit()
     if key == ord('a')  : #下、右
-        result_index -= 1
+        if result_index == 0:
+            continue
+        else:
+            result_index -= 1
     if key == ord('d') or key == 2424832: #上、左
-        result_index += 1
+        if result_index == (len(image_names) - 1):
+            continue
+        else:
+            result_index += 1
 
     if crop_sub_flag:
         cv2.destroyAllWindows()
